@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembayaran - Dana</title>
+    <title>Pembayaran - Dana & QRIS</title>
     <style>
         * {
             margin: 0;
@@ -64,10 +64,12 @@
             justify-content: space-between;
             margin-bottom: 10px;
             padding: 8px 0;
+            align-items: center;
         }
 
         .info-label {
             font-weight: bold;
+            min-width: 120px;
         }
 
         .info-value {
@@ -75,6 +77,9 @@
             background-color: rgba(0, 0, 0, 0.2);
             padding: 5px 10px;
             border-radius: 5px;
+            flex-grow: 1;
+            margin: 0 10px;
+            text-align: center;
         }
 
         .instructions {
@@ -102,12 +107,61 @@
             padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
-            margin-left: 10px;
             transition: background-color 0.3s;
+            white-space: nowrap;
         }
 
         .copy-btn:hover {
             background-color: #45a049;
+        }
+
+        .qrcode-section {
+            margin: 25px 0;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+        }
+
+        .qrcode-section h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .qrcode-container {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .qrcode {
+            width: 200px;
+            height: 200px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qrcode img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 5px;
+        }
+
+        .qrcode-placeholder {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(45deg, #eee 25%, #ddd 25%, #ddd 50%, #eee 50%, #eee 75%, #ddd 75%, #ddd);
+            background-size: 20px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.8rem;
+            text-align: center;
+            border-radius: 5px;
         }
 
         .music-controls {
@@ -116,6 +170,9 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
         }
 
         .music-btn {
@@ -167,8 +224,27 @@
                 font-size: 2rem;
             }
             
-            .payment-info, .instructions {
+            .payment-info, .instructions, .qrcode-section {
                 padding: 15px;
+            }
+            
+            .info-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .info-value {
+                margin: 10px 0;
+                width: 100%;
+            }
+            
+            .copy-btn {
+                align-self: flex-end;
+            }
+            
+            .qrcode {
+                width: 180px;
+                height: 180px;
             }
         }
     </style>
@@ -181,14 +257,14 @@
     <div class="bubble" style="width: 100px; height: 100px; top: 20%; left: 70%; animation: float 11s infinite ease-in-out;"></div>
 
     <div class="container">
-        <div class="logo">💳 DANA</div>
+        <div class="logo">💳 DANA & QRIS</div>
         
         <div class="payment-info">
-            <h2>Informasi Pembayaran</h2>
+            <h2>Informasi Pembayaran DANA</h2>
             <div class="info-item">
                 <span class="info-label">Nomor DANA:</span>
-                <span class="info-value">05697398584</span>
-                <button class="copy-btn" onclick="copyToClipboard('05697398584')">Salin</button>
+                <span class="info-value">085697398584</span>
+                <button class="copy-btn" onclick="copyToClipboard('085697398584')">Salin</button>
             </div>
             <div class="info-item">
                 <span class="info-label">Atas Nama:</span>
@@ -197,27 +273,41 @@
             </div>
         </div>
         
+        <div class="qrcode-section">
+            <h3>QR Code All Payment (QRIS)</h3>
+            <p>Scan QR code di bawah untuk pembayaran via aplikasi bank/e-wallet apapun</p>
+            <div class="qrcode-container">
+                <div class="qrcode">
+                    <img src="https://underground-orange-hwultp3tud.edgeone.app/IMG-20250928-WA0017.jpg" alt="QR Code Pembayaran" onerror="this.style.display='none'; document.getElementById('qrcode-placeholder').style.display='flex';">
+                    <div class="qrcode-placeholder" id="qrcode-placeholder" style="display: none;">
+                        QR Code tidak dapat dimuat<br>
+                        <a href="https://underground-orange-hwultp3tud.edgeone.app/IMG-20250928-WA0017.jpg" style="color: #2a5298; text-decoration: underline;">Klik di sini untuk melihat</a>
+                    </div>
+                </div>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard('https://underground-orange-hwultp3tud.edgeone.app/IMG-20250928-WA0017.jpg')">Salin Link QR Code</button>
+        </div>
+        
         <div class="instructions">
             <h3>Petunjuk Pembayaran:</h3>
             <ol>
-                <li>Buka aplikasi DANA di ponsel Anda</li>
-                <li>Pilih menu "Kirim" atau "Transfer"</li>
-                <li>Masukkan nomor DANA yang tertera di atas</li>
-                <li>Masukkan jumlah yang ingin ditransfer</li>
-                <li>Konfirmasi bahwa nama penerima adalah "Sartini"</li>
+                <li><strong>Via DANA:</strong> Buka aplikasi DANA → Pilih "Kirim" → Masukkan nomor DANA di atas → Konfirmasi nama "Sartini"</li>
+                <li><strong>Via QRIS:</strong> Buka aplikasi bank/e-wallet → Pilih "Bayar dengan QR" → Scan QR code di atas → Masukkan nominal</li>
                 <li>Ikuti instruksi selanjutnya untuk menyelesaikan pembayaran</li>
+                <li>Simpan bukti transfer untuk konfirmasi</li>
             </ol>
         </div>
         
         <div class="music-controls">
             <button class="music-btn" id="playBtn">▶️</button>
             <button class="music-btn" id="pauseBtn">⏸️</button>
+            <span style="margin: 0 10px;">Volume:</span>
             <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-slider" id="volumeControl">
         </div>
     </div>
     
     <footer>
-        &copy; 2023 Pembayaran DANA. Pastikan informasi sudah benar sebelum melakukan transfer.
+        &copy; 2023 Pembayaran DANA & QRIS. Pastikan informasi sudah benar sebelum melakukan transfer.
     </footer>
 
     <!-- Audio element for background music -->
@@ -239,11 +329,15 @@
         // Play music
         playBtn.addEventListener('click', function() {
             bgMusic.play();
+            playBtn.disabled = true;
+            pauseBtn.disabled = false;
         });
         
         // Pause music
         pauseBtn.addEventListener('click', function() {
             bgMusic.pause();
+            playBtn.disabled = false;
+            pauseBtn.disabled = true;
         });
         
         // Volume control
@@ -255,8 +349,13 @@
         document.addEventListener('click', function() {
             if (bgMusic.paused) {
                 bgMusic.play();
+                playBtn.disabled = true;
+                pauseBtn.disabled = false;
             }
         }, { once: true });
+        
+        // Initially disable pause button
+        pauseBtn.disabled = true;
         
         // Copy to clipboard function
         function copyToClipboard(text) {
@@ -264,6 +363,14 @@
                 alert('Teks berhasil disalin: ' + text);
             }, function(err) {
                 console.error('Gagal menyalin teks: ', err);
+                // Fallback for older browsers
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textArea);
+                alert('Teks berhasil disalin: ' + text);
             });
         }
         
