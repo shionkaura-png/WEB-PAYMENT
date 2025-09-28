@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran - Dana</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .payment-info {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .payment-info h2 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+        }
+
+        .info-label {
+            font-weight: bold;
+        }
+
+        .info-value {
+            font-family: 'Courier New', monospace;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .instructions {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        .copy-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .copy-btn:hover {
+            background-color: #45a049;
+        }
+
+        .music-controls {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .music-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .music-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .volume-slider {
+            width: 100px;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(10px); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .payment-info, .instructions {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background bubbles -->
+    <div class="bubble" style="width: 80px; height: 80px; top: 10%; left: 10%; animation: float 7s infinite ease-in-out;"></div>
+    <div class="bubble" style="width: 120px; height: 120px; top: 70%; left: 80%; animation: float 9s infinite ease-in-out;"></div>
+    <div class="bubble" style="width: 60px; height: 60px; top: 40%; left: 5%; animation: float 5s infinite ease-in-out;"></div>
+    <div class="bubble" style="width: 100px; height: 100px; top: 20%; left: 70%; animation: float 11s infinite ease-in-out;"></div>
+
+    <div class="container">
+        <div class="logo">💳 DANA</div>
+        
+        <div class="payment-info">
+            <h2>Informasi Pembayaran</h2>
+            <div class="info-item">
+                <span class="info-label">Nomor DANA:</span>
+                <span class="info-value">05697398584</span>
+                <button class="copy-btn" onclick="copyToClipboard('05697398584')">Salin</button>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Atas Nama:</span>
+                <span class="info-value">Sartini</span>
+                <button class="copy-btn" onclick="copyToClipboard('Sartini')">Salin</button>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>Petunjuk Pembayaran:</h3>
+            <ol>
+                <li>Buka aplikasi DANA di ponsel Anda</li>
+                <li>Pilih menu "Kirim" atau "Transfer"</li>
+                <li>Masukkan nomor DANA yang tertera di atas</li>
+                <li>Masukkan jumlah yang ingin ditransfer</li>
+                <li>Konfirmasi bahwa nama penerima adalah "Sartini"</li>
+                <li>Ikuti instruksi selanjutnya untuk menyelesaikan pembayaran</li>
+            </ol>
+        </div>
+        
+        <div class="music-controls">
+            <button class="music-btn" id="playBtn">▶️</button>
+            <button class="music-btn" id="pauseBtn">⏸️</button>
+            <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-slider" id="volumeControl">
+        </div>
+    </div>
+    
+    <footer>
+        &copy; 2023 Pembayaran DANA. Pastikan informasi sudah benar sebelum melakukan transfer.
+    </footer>
+
+    <!-- Audio element for background music -->
+    <audio id="bgMusic" loop>
+        <source src="https://assets.codepen.io/1468070/relaxing-music.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <script>
+        // Background music control
+        const bgMusic = document.getElementById('bgMusic');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const volumeControl = document.getElementById('volumeControl');
+        
+        // Set initial volume
+        bgMusic.volume = volumeControl.value;
+        
+        // Play music
+        playBtn.addEventListener('click', function() {
+            bgMusic.play();
+        });
+        
+        // Pause music
+        pauseBtn.addEventListener('click', function() {
+            bgMusic.pause();
+        });
+        
+        // Volume control
+        volumeControl.addEventListener('input', function() {
+            bgMusic.volume = volumeControl.value;
+        });
+        
+        // Auto-play music with user interaction
+        document.addEventListener('click', function() {
+            if (bgMusic.paused) {
+                bgMusic.play();
+            }
+        }, { once: true });
+        
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Teks berhasil disalin: ' + text);
+            }, function(err) {
+                console.error('Gagal menyalin teks: ', err);
+            });
+        }
+        
+        // Create additional bubbles dynamically
+        function createBubbles() {
+            const body = document.querySelector('body');
+            for (let i = 0; i < 5; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                const size = Math.random() * 60 + 40;
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                bubble.style.top = Math.random() * 100 + '%';
+                bubble.style.left = Math.random() * 100 + '%';
+                bubble.style.animation = `float ${Math.random() * 5 + 5}s infinite ease-in-out`;
+                bubble.style.animationDelay = Math.random() * 5 + 's';
+                body.appendChild(bubble);
+            }
+        }
+        
+        // Initialize bubbles
+        createBubbles();
+    </script>
+</body>
+</html>
