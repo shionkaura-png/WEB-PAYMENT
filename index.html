@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembayaran - Dana & QRIS</title>
+    <title>Pembayaran Online</title>
     <style>
         * {
             margin: 0;
@@ -14,57 +14,83 @@
 
         body {
             background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: white;
+            color: #333;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             padding: 20px;
             position: relative;
             overflow-x: hidden;
         }
 
         .container {
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
+            background-color: white;
+            border-radius: 15px;
             padding: 30px;
             width: 100%;
-            max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
         }
 
-        .logo {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: #1e3c72;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #1e3c72, transparent);
+            margin: 25px 0;
+        }
+
+        .payment-method {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .payment-method h2 {
+            color: #1e3c72;
+            font-size: 22px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .payment-method h2::before {
+            content: "•";
+            margin-right: 10px;
+            color: #2a5298;
+            font-size: 30px;
         }
 
         .payment-info {
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: left;
-        }
-
-        .payment-info h2 {
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 10px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 4px solid #2a5298;
         }
 
         .info-item {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding: 8px 0;
-            align-items: center;
+            margin-bottom: 8px;
         }
 
         .info-label {
@@ -72,85 +98,52 @@
             min-width: 120px;
         }
 
-        .info-value {
-            font-family: 'Courier New', monospace;
-            background-color: rgba(0, 0, 0, 0.2);
-            padding: 5px 10px;
-            border-radius: 5px;
-            flex-grow: 1;
-            margin: 0 10px;
-            text-align: center;
-        }
-
-        .instructions {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px 0;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-
-        .instructions ol {
-            padding-left: 20px;
-            margin-top: 10px;
-        }
-
-        .instructions li {
-            margin-bottom: 8px;
-        }
-
         .copy-btn {
-            background-color: #4CAF50;
+            background-color: #2a5298;
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+            padding: 5px 10px;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
             transition: background-color 0.3s;
-            white-space: nowrap;
         }
 
         .copy-btn:hover {
-            background-color: #45a049;
+            background-color: #1e3c72;
         }
 
-        .qrcode-section {
+        .qris-section {
+            text-align: center;
             margin: 25px 0;
-            padding: 15px;
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
         }
 
-        .qrcode-section h3 {
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-
-        .qrcode-container {
+        .qris-container {
             display: flex;
             justify-content: center;
             margin: 15px 0;
         }
 
-        .qrcode {
+        .qris-code {
             width: 200px;
             height: 200px;
             background-color: white;
             border-radius: 10px;
             padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .qrcode img {
+        .qris-code img {
             max-width: 100%;
             max-height: 100%;
             border-radius: 5px;
         }
 
-        .qrcode-placeholder {
+        .qris-placeholder {
             width: 180px;
             height: 180px;
             background: linear-gradient(45deg, #eee 25%, #ddd 25%, #ddd 50%, #eee 50%, #eee 75%, #ddd 75%, #ddd);
@@ -164,19 +157,56 @@
             border-radius: 5px;
         }
 
+        .whatsapp-section {
+            background-color: #25D366;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .whatsapp-btn {
+            display: inline-block;
+            background-color: white;
+            color: #25D366;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .channel-link {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .channel-link a {
+            color: white;
+            text-decoration: underline;
+        }
+
         .music-controls {
             margin-top: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 15px;
             border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
         }
 
         .music-btn {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: #2a5298;
             border: none;
             color: white;
             padding: 10px 15px;
@@ -187,7 +217,7 @@
         }
 
         .music-btn:hover {
-            background-color: rgba(255, 255, 255, 0.3);
+            background-color: #1e3c72;
             transform: scale(1.1);
         }
 
@@ -199,7 +229,8 @@
             margin-top: 30px;
             text-align: center;
             font-size: 0.8rem;
-            opacity: 0.7;
+            color: white;
+            opacity: 0.8;
         }
 
         .bubble {
@@ -220,29 +251,25 @@
                 padding: 20px;
             }
             
-            .logo {
-                font-size: 2rem;
+            h1 {
+                font-size: 24px;
             }
             
-            .payment-info, .instructions, .qrcode-section {
+            .payment-method {
                 padding: 15px;
             }
             
             .info-item {
                 flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .info-value {
-                margin: 10px 0;
-                width: 100%;
             }
             
             .copy-btn {
-                align-self: flex-end;
+                margin-left: 0;
+                margin-top: 5px;
+                align-self: flex-start;
             }
             
-            .qrcode {
+            .qris-code {
                 width: 180px;
                 height: 180px;
             }
@@ -254,60 +281,84 @@
     <div class="bubble" style="width: 80px; height: 80px; top: 10%; left: 10%; animation: float 7s infinite ease-in-out;"></div>
     <div class="bubble" style="width: 120px; height: 120px; top: 70%; left: 80%; animation: float 9s infinite ease-in-out;"></div>
     <div class="bubble" style="width: 60px; height: 60px; top: 40%; left: 5%; animation: float 5s infinite ease-in-out;"></div>
-    <div class="bubble" style="width: 100px; height: 100px; top: 20%; left: 70%; animation: float 11s infinite ease-in-out;"></div>
 
     <div class="container">
-        <div class="logo">💳 DANA & QRIS</div>
+        <header>
+            <h1>Pembayaran Online</h1>
+            <p class="subtitle">Silakan pilih metode pembayaran yang tersedia</p>
+        </header>
         
-        <div class="payment-info">
-            <h2>Informasi Pembayaran DANA</h2>
-            <div class="info-item">
-                <span class="info-label">Nomor DANA:</span>
-                <span class="info-value">085697398584</span>
-                <button class="copy-btn" onclick="copyToClipboard('085697398584')">Salin</button>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Atas Nama:</span>
-                <span class="info-value">Sartini</span>
-                <button class="copy-btn" onclick="copyToClipboard('Sartini')">Salin</button>
-            </div>
-        </div>
+        <hr>
         
-        <div class="qrcode-section">
-            <h3>QR Code All Payment (QRIS)</h3>
-            <p>Scan QR code di bawah untuk pembayaran via aplikasi bank/e-wallet apapun</p>
-            <div class="qrcode-container">
-                <div class="qrcode">
-                    <img src="https://underground-orange-hwultp3tud.edgeone.app/IMG-20250928-WA0017.jpg" alt="QR Code Pembayaran" onerror="this.style.display='none'; document.getElementById('qrcode-placeholder').style.display='flex';">
-                    <div class="qrcode-placeholder" id="qrcode-placeholder" style="display: none;">
-                        QR Code tidak dapat dimuat<br>
-                        <a href="https://underground-orange-hwultp3tud.edgeone.app/IMG-20250928-WA0017.jpg" style="color: #2a5298; text-decoration: underline;">Klik di sini untuk melihat</a>
-                    </div>
+        <div class="payment-method">
+            <h2>DANA</h2>
+            <div class="payment-info">
+                <div class="info-item">
+                    <span class="info-label">Nomor:</span>
+                    <span>085697398584</span>
+                    <button class="copy-btn" onclick="copyToClipboard('085697398584')">Salin</button>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Atas Nama:</span>
+                    <span>mas kah</span>
+                    <button class="copy-btn" onclick="copyToClipboard('mas kah')">Salin</button>
                 </div>
             </div>
-            <button class="copy-btn" onclick="copyToClipboard('https://underground-orange-hwultp3tud.edgeone.app/IMG-20250928-WA0017.jpg')">Salin Link QR Code</button>
         </div>
         
-        <div class="instructions">
-            <h3>Petunjuk Pembayaran:</h3>
-            <ol>
-                <li><strong>Via DANA:</strong> Buka aplikasi DANA → Pilih "Kirim" → Masukkan nomor DANA di atas → Konfirmasi nama "Sartini"</li>
-                <li><strong>Via QRIS:</strong> Buka aplikasi bank/e-wallet → Pilih "Bayar dengan QR" → Scan QR code di atas → Masukkan nominal</li>
-                <li>Ikuti instruksi selanjutnya untuk menyelesaikan pembayaran</li>
-                <li>Simpan bukti transfer untuk konfirmasi</li>
-            </ol>
+        <div class="payment-method">
+            <h2>GOPAY</h2>
+            <div class="payment-info">
+                <div class="info-item">
+                    <span class="info-label">Nomor:</span>
+                    <span>085697398584</span>
+                    <button class="copy-btn" onclick="copyToClipboard('085697398584')">Salin</button>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Atas Nama:</span>
+                    <span>mas kah</span>
+                    <button class="copy-btn" onclick="copyToClipboard('mas kah')">Salin</button>
+                </div>
+            </div>
         </div>
         
-        <div class="music-controls">
-            <button class="music-btn" id="playBtn">▶️</button>
-            <button class="music-btn" id="pauseBtn">⏸️</button>
-            <span style="margin: 0 10px;">Volume:</span>
-            <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-slider" id="volumeControl">
+        <div class="payment-method">
+            <h2>QRIS</h2>
+            <div class="qris-section">
+                <p><strong>QRIS Code</strong></p>
+                <div class="qris-container">
+                    <div class="qris-code">
+                        <img src="https://underground-orange-hwultp3tud.edgeone.app/IMG-20250928-WA0017.jpg" alt="QR Code Pembayaran" onerror="this.style.display='none'; document.getElementById('qris-placeholder').style.display='flex';">
+                        <div class="qris-placeholder" id="qris-placeholder" style="display: none;">
+                            QR Code tidak dapat dimuat<br>
+                            <a href="https://underground-orange-hwultp3tud.edgeone.app/IMG-20250928-WA0017.jpg" style="color: #2a5298; text-decoration: underline;">Klik di sini untuk melihat</a>
+                        </div>
+                    </div>
+                </div>
+                <p><em>Scan QR code di atas untuk pembayaran yang lebih cepat dan mudah</em></p>
+                <button class="copy-btn" onclick="copyToClipboard('https://underground-orange-hwultp3tud.edgeone.app/IMG-20250928-WA0017.jpg')">Salin Link QR Code</button>
+            </div>
+        </div>
+        
+        <div class="whatsapp-section">
+            <h3>Konfirmasi Pembayaran via WhatsApp</h3>
+            <p>Terima kasih atas pembayaran Anda. Pastikan untuk mengonfirmasi setelah melakukan pembayaran.</p>
+            <a href="https://wa.me/6285697398584?text=Halo,%20saya%20telah%20melakukan%20pembayaran" class="whatsapp-btn" target="_blank">Konfirmasi via WhatsApp</a>
+            <div class="channel-link">
+                <p>Link Saluran: <a href="https://whatsapp.com/channel/0029Vb6AQCW9sBI9M4OTZ61j" target="_blank">https://whatsapp.com/channel/0029Vb6AQCW9sBI9M4OTZ61j</a></p>
+            </div>
         </div>
     </div>
     
+    <div class="music-controls">
+        <button class="music-btn" id="playBtn">▶️</button>
+        <button class="music-btn" id="pauseBtn">⏸️</button>
+        <span style="margin: 0 10px; color: #333;">Volume:</span>
+        <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-slider" id="volumeControl">
+    </div>
+    
     <footer>
-        &copy; 2023 Pembayaran DANA & QRIS. Pastikan informasi sudah benar sebelum melakukan transfer.
+        &copy; 2023 Pembayaran Online. Pastikan informasi sudah benar sebelum melakukan transfer.
     </footer>
 
     <!-- Audio element for background music -->
